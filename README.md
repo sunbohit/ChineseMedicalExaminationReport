@@ -1,1 +1,1 @@
-# ChineseMedicalExaminationReport
+# 中文医疗报告研究
