@@ -20,9 +20,13 @@ def clean_text(foldername):
 			inputfile = os.path.join(roots, filename)
 			outputfile = os.path.join(os.path.join(outputfolder,foldername),filename)
 			input_f = open(inputfile,"r")
-			output_f = open(outputfile, "a")
+			
 			lines = input_f.readlines()
 			# print(len(lines)) #10
+			if len(lines[5].strip()) == 0 :
+				continue
+			
+			output_f = open(outputfile, "a")
 			output_f.write(lines[5])
 			output_f.write(lines[7])
 			output_f.write(lines[9])
