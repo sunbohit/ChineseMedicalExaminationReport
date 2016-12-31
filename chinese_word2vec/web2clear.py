@@ -4,24 +4,6 @@ import re
 inputfolder = "./web_utf8"
 outputfolder = "./training_data"
 
-def load_stopwords():
-	print('Loading stopword')
-	stopfile = open('stopword')
-	stopwords_library = set([])
-	while True:
-		word = stopfile.readline()
-		if not word:
-			break
-		stopwords_library.add(word)
-	return stopwords_library
-
-stopwords_library = load_stopwords()
-
-def remove_stopwords(cut_origin):
-	for i in cut_origin:
-		if i in stopwords_library:
-			cut_origin.remove(i)
-
 def clear(in_filename, out_filename):
 	in_file = open(in_filename, 'r',encoding='utf-8')
 	out_file = open(out_filename,'a',encoding='utf-8')
