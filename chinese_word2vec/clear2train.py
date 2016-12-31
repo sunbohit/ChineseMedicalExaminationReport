@@ -66,10 +66,13 @@ def train_char(in_filename, out_filename):
 	in_file.close()
 	out_file.close()
 
-def clear2train(level)
+def clear2train(level):
 	files = os.listdir(os.path.join(inputfolder,level))	
 	for filename in files:
 		print('Cuting...:', filename)
 		train_word(os.path.join(data_dir, level, filename), os.path.join(output,'train_word_cutall_true.txt'),True)
 		train_word(os.path.join(data_dir, level, filename), os.path.join(output,'train_word_cutall_false.txt'),False)
 		train_char(os.path.join(data_dir, level, filename), os.path.join(output,'train_character.txt'))
+
+clear2train('word')
+clear2train('character')
