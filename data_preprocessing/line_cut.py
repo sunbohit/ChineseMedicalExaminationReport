@@ -7,16 +7,32 @@ import re
 input_file= '../clean/real_text.txt'
 output_file= '../clean/cut_text.txt'
 
-def sentence_split(str_centence):
+jieba.load_userdict('dict.txt')
+
+def sentence_split(str_sentence):
 	list_ret = list()
-	for s_str in str_centence.split('。'):
-		if '?' in s_str:
-			list_ret.extend(s_str.split('？'))
-		elif '!' in s_str:
-			list_ret.extend(s_str.split('！'))
-		else:
-			list_ret.append(s_str)
+	for s_str in str_sentence.split('。'):
+		if len(s_str.strip()) < 5:
+			continue
+		s_str = s_str.strip()
+		pattern = re.compile(r'\s+')
+		s_str = re.sub(pattern, '', s_str)
+		
+		#if '?' in s_str:
+		#	list_ret.extend(s_str.split('？'))
+		#elif '!' in s_str:
+		#	list_ret.extend(s_str.split('！'))
+		#else:
+		#	list_ret.append(s_str)
+
+		list_ret.append(s_str+'。')
+
 	return list_ret
+
+def num_sub(str_sentence):
+	pattern = re.compile(r'\s*\d+\s*')
+	sub_result = re.sub(pattern, '<NUM>', str_sentence)
+	return sub_result
 
 def jieba_preprocess(in_filename, out_filename):
 	in_file = open(in_filename, 'r')
@@ -31,7 +47,7 @@ def jieba_preprocess(in_filename, out_filename):
 			continue
 		sentence = line
 		cut_res = jieba.lcut(sentence, cut_all=True)
-		remove_stopwords(cut_res)
+		#remove_stopwords(cut_res)
 		if not cut_res:
 			continue
 		new_line = ' '.join(cut_res)+'\n'
@@ -49,8 +65,11 @@ def line_cut(inputfile,outputfile):
 	out_file = open(outputfile,'a')
 
 	for line in in_file.readlines():
+		if '' == line.strip():
+			continue
 		list_ret = sentence_split(line)
 		for ret in list_ret:
+			ret = num_sub(ret)
 			out_file.write(ret+'\n')
 		out_file.write('\n')
 
